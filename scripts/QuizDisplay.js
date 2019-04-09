@@ -70,7 +70,8 @@ class QuizDisplay extends Renderer {    // eslint-disable-line no-unused-vars
     if (this.model.asked[this.model.asked.length - 1].answerStatus() === 1) {
         answerDiv = `<div>YOU GOT IT! The correct answer is ${this.model.asked[this.model.asked.length - 1].correctAnswer}</div>`;
       } else {
-        answerDiv = `<div>YOU SUCK! The correct answer is ${this.model.asked[this.model.asked.length - 1].correctAnswer}</div>`;
+        answerDiv = `<div>Sorry, that's incorrect. You answered: ${this.model.asked[this.model.asked.length - 1].userAnswer} 
+          The correct answer is ${this.model.asked[this.model.asked.length - 1].correctAnswer}</div>`;
       };
     
     const continueButton = '<button type="button" class="continue">Continue</button>';
