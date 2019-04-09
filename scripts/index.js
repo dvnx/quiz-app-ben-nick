@@ -7,7 +7,7 @@ let q, quizDisplay, quizStatus;    // eslint-disable-line no-unused-vars
 
 function main() {
   q = new Quiz();
-  q.initialize();
+  
   quizDisplay = new QuizDisplay(q, '.display');
   quizStatus = new QuizStatus(q, '.status');
 }

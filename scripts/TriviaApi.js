@@ -8,7 +8,7 @@ class TriviaApi {
     }
 
     getQuestions() {
-        return fetch(`${this.base_url}?amount=${this.amount}`)
+        return fetch(`${this.base_url}?amount=${this.amount}&type=multiple`)
             .then(res => { return res.json(); })
             .then((data) => {
                 return data.results;

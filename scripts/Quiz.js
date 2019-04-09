@@ -17,16 +17,24 @@ class Quiz extends Model {          // eslint-disable-line no-unused-vars
     this.score = 0;
     this.scoreHistory = [];
     this.active = false;
-    this.questionResult = null; // true = correct answer submitted; false = incorrect
+    this.highScore = 0;
   }
 
   initialize() {
-    new TriviaApi(5).getQuestions()
+    this.score = 0;
+    this.clearQuestions();
+    
+    return new TriviaApi(5).getQuestions()
       .then((questions) => {
         questions.forEach(question => {
           this.unasked.push(new Question(question))
         });
       });
+  }
+
+  clearQuestions() {
+    this.unasked.length = 0;
+    this.asked.length = 0;
   }
 
   toggleActive() {
@@ -55,6 +63,10 @@ class Quiz extends Model {          // eslint-disable-line no-unused-vars
     }
 
     return highScore;
+  }
+
+  setHighScore() {
+    this.highScore = this.getHighScore();
   }
 
   getProgress() {

@@ -5,8 +5,8 @@
 class QuizStatus extends Renderer {    // eslint-disable-line no-unused-vars
   template() {
     return `
-      <span class="score">${q.score}</span>
-      <span class="high-score">${q.getHighScore()}</span>
+      <span class="score">Score: ${q.score}</span>
+      <span class="high-score">High Score: ${q.getHighScore()}</span>
       <span class="progress">${q.getProgress()}</span>
     `;
   }
