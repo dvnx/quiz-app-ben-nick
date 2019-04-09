@@ -10,21 +10,27 @@ class Quiz extends Model {          // eslint-disable-line no-unused-vars
     super();
 
     // Your Quiz model's constructor logic should go here. There is just examples below.
-    this.questions = [{ id: 1, text: 'Question 1' }];
+    // this.questions = [{ id: 1, text: 'Question 1' }];
 
     this.unasked = [];
     this.asked = [];
     this.score = 0;
     this.scoreHistory = [];
     this.active = false;
+    this.questionResult = null; // true = correct answer submitted; false = incorrect
   }
 
-  // startNewGame() {
-  //   this.active = true;
-  // }
-
   initialize() {
-    new TriviaApi().getQuestions().then((questions) => {questions.forEach(question => this.unasked.push(new Question(question)));});
+    new TriviaApi(5).getQuestions()
+      .then((questions) => {
+        questions.forEach(question => {
+          this.unasked.push(new Question(question))
+        });
+      });
+  }
+
+  toggleActive() {
+    this.active = !this.active;
   }
 
   askQuestion() {
@@ -40,7 +46,7 @@ class Quiz extends Model {          // eslint-disable-line no-unused-vars
   }
 
   getHighScore() {
-    let highScore = this.scoreHistory[0];
+    let highScore = this.scoreHistory[0] || 0;
 
     for(let i=1; i<this.scoreHistory.length; i++) {
       if(this.scoreHistory[i] > highScore) {
@@ -51,8 +57,11 @@ class Quiz extends Model {          // eslint-disable-line no-unused-vars
     return highScore;
   }
 
-  toggleActive() {
-    this.active = !this.active;
+  getProgress() {
+    if(!this.active) {
+      return 'Inactive';
+    } else {
+      return `${this.asked.length} of ${this.asked.length + this.unasked.length}`;
+    }
   }
-
 }

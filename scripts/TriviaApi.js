@@ -2,9 +2,9 @@
 'use strict';
 
 class TriviaApi {
-    constructor () {
+    constructor (amt) {
         this.base_url = 'https://opentdb.com/api.php';
-        this.amount = 10;
+        this.amount = amt;
     }
 
     getQuestions() {
@@ -13,7 +13,6 @@ class TriviaApi {
             .then((data) => {
                 return data.results;
             });
-            // .then((questions) => {questions.forEach(question => Quiz.unasked.push(question));});
     }
 }
 
