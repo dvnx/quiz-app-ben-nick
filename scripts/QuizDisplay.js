@@ -14,12 +14,12 @@ class QuizDisplay extends Renderer {    // eslint-disable-line no-unused-vars
 
   _generateIntro() {
     return `
-      <div>
-        <p>
-          Welcome to the Trivia Quiz
-        </p>
+      <div class="grid-row col-3">
+        <header class="grid-item">
+          <h1>Welcome to the Trivia Quiz</h1>
+        </header>
       </div>
-      <div>
+      <div class="grid-row grid-item col-2">
         <button class="start">Start</button>
       </div>
     `;
@@ -30,18 +30,22 @@ class QuizDisplay extends Renderer {    // eslint-disable-line no-unused-vars
     console.log(this.model.scoreHistory);
 
     if (this.model.score > this.model.highScore) {
-      highScoreText = `<p>That's a new high score!</p>`;
+      highScoreText = `<p class="grid-row col-2">That's a new high score!</p>`;
     };
 
     this.model.setHighScore();
 
     return `
-      <div>
-        <p>Good Job!</p>
-        <p>You scored ${this.model.score} out of ${this.model.asked.length}!</p>
+      <div class="grid-row col-3">
+        <div class="grid-row col-3">  
+          <p>Good Job!</p>
+        </div>
+        <div class="grid-row col-3">
+          <p>You scored ${this.model.score} out of ${this.model.asked.length}!</p>
+        </div>
         ${highScoreText}
       </div>
-      <div>
+      <div class="grid-row grid-item col-2">
         <button class="start">Play Again</button>
       </div>
     `
@@ -51,27 +55,55 @@ class QuizDisplay extends Renderer {    // eslint-disable-line no-unused-vars
     const index = this.model.asked.length - 1;
     
     return `
-      <div>
-        ${this.model.asked[index].text}
+      <div class="grid-row col-3">
+        <h2>${this.model.asked[index].text}</h2>
       </div>
-      <form class="answer-choices-form">
-        <input type="radio" name="answer-choice" value="${this.model.asked[index].choicesArray[0]}">${this.model.asked[index].choicesArray[0]}<br>
-        <input type="radio" name="answer-choice" value="${this.model.asked[index].choicesArray[1]}">${this.model.asked[index].choicesArray[1]}<br>
-        <input type="radio" name="answer-choice" value="${this.model.asked[index].choicesArray[2]}">${this.model.asked[index].choicesArray[2]}<br>
-        <input type="radio" name="answer-choice" value="${this.model.asked[index].choicesArray[3]}">${this.model.asked[index].choicesArray[3]}<br>
-        <input type="submit">
+      <form class="grid-row answer-choices-form">
+        <div class="col-3">
+          <input class="grid-item" type="radio" name="answer-choice" id="a" value="${this.model.asked[index].choicesArray[0]}">
+          <label class="grid-item col-2" for="a">${this.model.asked[index].choicesArray[0]}</label>
+        </div>
+        <div class="col-3">
+          <input class="grid-item" type="radio" name="answer-choice" id="b" value="${this.model.asked[index].choicesArray[1]}">
+          <label class="grid-item col-2" for="b">${this.model.asked[index].choicesArray[1]}</label>
+        </div>
+        <div class="col-3">
+          <input class="grid-item" type="radio" name="answer-choice" id="c" value="${this.model.asked[index].choicesArray[2]}">
+          <label class="grid-item col-2" for="c">${this.model.asked[index].choicesArray[2]}</label>
+        </div>
+        <div class="col-3">
+          <input class="grid-item" type="radio" name="answer-choice" id="d" value="${this.model.asked[index].choicesArray[3]}">
+          <label class="grid-item col-2" for="d">${this.model.asked[index].choicesArray[3]}</label>
+        </div>
+        <div class="grid-row grid-item col-2">
+          <input type="submit">
+        </div>
       </form>
     `;
   }
 
   _generateResult() {
+    const index = this.model.asked.length - 1;
     let answerDiv = '';
+    const correctAnswer = `<br>The correct answer was:<br>${this.model.asked[this.model.asked.length - 1].correctAnswer}`;
 
     if (this.model.asked[this.model.asked.length - 1].answerStatus() === 1) {
-        answerDiv = `<div>YOU GOT IT! The correct answer is ${this.model.asked[this.model.asked.length - 1].correctAnswer}</div>`;
+        answerDiv = `
+        <div class="grid-row col-3">
+          <h2>${this.model.asked[index].text}</h2>
+        </div>
+        <div class="grid-row col-3">
+          <h3 class="grid-item col-2">YOU GOT IT!${correctAnswer}</h3>
+        </div>`;
       } else {
-        answerDiv = `<div>Sorry, that's incorrect. You answered: ${this.model.asked[this.model.asked.length - 1].userAnswer} 
-          The correct answer is ${this.model.asked[this.model.asked.length - 1].correctAnswer}</div>`;
+      answerDiv = `
+        <div class="grid-row col-3" >
+          <h2>${this.model.asked[index].text}</h2>
+        </div >
+        <div class="grid-row col-3">
+          <h3 class="grid-item col-2">Sorry that's incorrect.<br>You answered:<br>${this.model.asked[this.model.asked.length-1].userAnswer}</h3>
+          <h3 class="grid-item col-2">${correctAnswer}</h3>
+        </div>`;
       };
     
     const continueButton = '<button type="button" class="continue">Continue</button>';

@@ -1,0 +1,30 @@
+* {
+  box-sizing: border-box;
+}
+
+body {
+  text-align: center;
+}
+
+.css-box {
+  padding: 10px;
+  border: 1px solid black;
+  margin-bottom: 20px;
+}
+
+.display {
+  padding-bottom: 30px;
+}
+
+button {
+  width: 300px;
+}
+
+input[type = "radio"], label {
+  display: inline-block;
+  vertical-align: middle;
+}
+
+input[type = "radio"] {
+  width: 15px;
+}
